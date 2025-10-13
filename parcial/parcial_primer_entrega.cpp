@@ -1,15 +1,7 @@
 #include <iostream>
 #include <vector>
 
-// Pasa una copia de a y sobre esa copia trabaja
-// pos 5
-// coord_x[pos-1] = 1
-// coord_y[pos-1] = 1
-// {3, 4, 1, 2, 5};
-// a[k-1];
-
 void inicializar(std::vector<std::vector<char>> &a){
-	// a.assign(3, std::vector(3, ' '));
 	for(int i = 0; i < 3; i++){
 		for(int j = 0; j < 3; j++){
 			a[i][j] = ' ';
@@ -35,14 +27,10 @@ void tablero (std::vector < std::vector<char>> b){
 	}
 }
 
-// a es el tablero
-// pos es la posición que va entre 1 y 9
-
 bool validacion_movimiento(std::vector < std::vector<char>> a, int pos){
 	int x_pos = (pos-1) / 3;	
 	int y_pos = (pos-1) % 3;
 
-	// Si pos = 5, a[1][1]
 	if ((a[x_pos][y_pos] != 'X') && (a[x_pos][y_pos] != 'O')){
 		return true;
 	}
@@ -51,7 +39,6 @@ bool validacion_movimiento(std::vector < std::vector<char>> a, int pos){
 	}
 }
 
-// tablero, 1<=posicion<=9, jugador='X' u 'O'
 void modificacion (std::vector < std::vector <char>> &c, int pos, char x ){
 	if(validacion_movimiento(c, pos)){
 		int x_pos = (pos-1) / 3;	
@@ -66,8 +53,6 @@ void modificacion (std::vector < std::vector <char>> &c, int pos, char x ){
 	}
 }
 
-// Si un jugador ganó
-// tablero, jugador='X' u 'O'
 bool ganador (std::vector<std::vector<char>> d, char jugador ){
 	bool respuesta = false;
 
@@ -125,17 +110,44 @@ bool ganador (std::vector<std::vector<char>> d, char jugador ){
 int main() {
 	
 	std::cout << "Bienvenido a 3 en raya" << std::endl;
-	std::cout << "Las posiciones son:" << std::endl;
-	std::vector<std::vector<char>> a{
+	int opciones; 
+	std::cout << "seleccione una opcion 1 jugar \n 2 salir " << std::endl;
+	
+	std::cin >> opciones;
+	
+	std::vector<std::vector<char>> a;
+	
+	switch (opciones )
+	{
+	case 1:
+		std::cout << "Las posiciones son:" << std::endl;
+		a = {
 			{'1', '2', '3'},
 			{'4', '5', '6'},
 			{'7', '8', '9'}
 		};
-	tablero(a);
+		tablero(a);
+		
+		break;
+	
+	case 2:
+		std::cout << "juego finalizado" << std::endl;
+
+		return 0;
+
+	default:
+		std::cout << "respuesta inexistente " << std::endl;
+		return 0;
+	}
 
 	bool continua = true;
 	while(continua){
-		inicializar(a);
+		a = {
+			{' ', ' ', ' '},
+			{' ', ' ', ' '},
+			{' ', ' ', ' '}
+		};
+		
 		int posiciones_llenas = 0;
 		char jugador = 'X';
 		char jugador_ganador = '-';
@@ -158,8 +170,10 @@ int main() {
 				} else {
 					jugador = 'X';
 				}
+			} else {
+				std::cout << "¡Posición inválida! Intente de nuevo." << std::endl;
 			}
-		} 
+		} 
 		if (jugador_ganador == '-'){
 			std::cout << "empate" << std::endl;
 		} else {
@@ -173,7 +187,7 @@ int main() {
 			switch (opcion)
 			{
 			case 1:
-				continua = true; 
+				continua = true; 
 				break;
 			case 2:
 				continua = false; 	
@@ -187,8 +201,3 @@ int main() {
 
 	return 0;
 }
-				    
-				    
-				    
-				    
-				    
